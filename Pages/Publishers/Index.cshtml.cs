@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Moldovan_Maria_Karina_Lab2.Data;
 using Moldovan_Maria_Karina_Lab2.Models;
 
-namespace Moldovan_Maria_Karina_Lab2.Pages.Books
+namespace Moldovan_Maria_Karina_Lab2.Pages.Publishers
 {
     public class IndexModel : PageModel
     {
@@ -19,15 +19,11 @@ namespace Moldovan_Maria_Karina_Lab2.Pages.Books
             _context = context;
         }
 
-        public IList<Book> Book { get;set; } = default!;
+        public IList<Publisher> Publisher { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Book = await _context.Book
-            .Include(b => b.Publisher)
-          .Include(b => b.Author)
-          .ToListAsync();
-
+            Publisher = await _context.Publisher.ToListAsync();
         }
     }
 }

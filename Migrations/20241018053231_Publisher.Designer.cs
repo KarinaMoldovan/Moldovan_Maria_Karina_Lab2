@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Moldovan_Maria_Karina_Lab2.Data;
 
@@ -11,9 +12,11 @@ using Moldovan_Maria_Karina_Lab2.Data;
 namespace Moldovan_Maria_Karina_Lab2.Migrations
 {
     [DbContext(typeof(Moldovan_Maria_Karina_Lab2Context))]
-    partial class Moldovan_Maria_Karina_Lab2ContextModelSnapshot : ModelSnapshot
+    [Migration("20241018053231_Publisher")]
+    partial class Publisher
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,27 +24,6 @@ namespace Moldovan_Maria_Karina_Lab2.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Moldovan_Maria_Karina_Lab2.Models.Author", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Author");
-                });
 
             modelBuilder.Entity("Moldovan_Maria_Karina_Lab2.Models.Book", b =>
                 {
@@ -51,11 +33,12 @@ namespace Moldovan_Maria_Karina_Lab2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int?>("AuthorID")
-                        .HasColumnType("int");
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(6, 2)");
 
                     b.Property<int?>("PublisherID")
                         .HasColumnType("int");
@@ -68,8 +51,6 @@ namespace Moldovan_Maria_Karina_Lab2.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("AuthorID");
 
                     b.HasIndex("PublisherID");
 
@@ -95,22 +76,11 @@ namespace Moldovan_Maria_Karina_Lab2.Migrations
 
             modelBuilder.Entity("Moldovan_Maria_Karina_Lab2.Models.Book", b =>
                 {
-                    b.HasOne("Moldovan_Maria_Karina_Lab2.Models.Author", "Author")
-                        .WithMany("Books")
-                        .HasForeignKey("AuthorID");
-
                     b.HasOne("Moldovan_Maria_Karina_Lab2.Models.Publisher", "Publisher")
                         .WithMany("Books")
                         .HasForeignKey("PublisherID");
 
-                    b.Navigation("Author");
-
                     b.Navigation("Publisher");
-                });
-
-            modelBuilder.Entity("Moldovan_Maria_Karina_Lab2.Models.Author", b =>
-                {
-                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("Moldovan_Maria_Karina_Lab2.Models.Publisher", b =>

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Moldovan_Maria_Karina_Lab2.Data;
 using Moldovan_Maria_Karina_Lab2.Models;
 
-namespace Moldovan_Maria_Karina_Lab2.Pages.Books
+namespace Moldovan_Maria_Karina_Lab2.Pages.Publishers
 {
     public class CreateModel : PageModel
     {
@@ -21,19 +21,11 @@ namespace Moldovan_Maria_Karina_Lab2.Pages.Books
 
         public IActionResult OnGet()
         {
-            ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID",
-"PublisherName");
-            ViewData["AuthorID"] = new SelectList(_context.Set<Author>(), "ID",
-"FirstName");
-            ViewData["AuthorID"] = new SelectList(_context.Set<Author>(), "ID",
-"LastName");
-
-
             return Page();
         }
 
         [BindProperty]
-        public Book Book { get; set; } = default!;
+        public Publisher Publisher { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
@@ -43,7 +35,7 @@ namespace Moldovan_Maria_Karina_Lab2.Pages.Books
                 return Page();
             }
 
-            _context.Book.Add(Book);
+            _context.Publisher.Add(Publisher);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
