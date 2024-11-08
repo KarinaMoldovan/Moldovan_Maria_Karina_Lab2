@@ -29,7 +29,7 @@ namespace Moldovan_Maria_Karina_Lab2.Pages.Borrowings
                 return NotFound();
             }
 
-            var borrowing = await _context.Borrowing.FirstOrDefaultAsync(m => m.ID == id);
+            var borrowing = await _context.Borrowing.Include(i => i.Member).Include(c => c.Book).ThenInclude(bc => bc.Author).FirstOrDefaultAsync(m => m.ID == id);
 
             if (borrowing == null)
             {

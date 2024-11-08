@@ -28,7 +28,8 @@ namespace Moldovan_Maria_Karina_Lab2.Pages.Borrowings
                 return NotFound();
             }
 
-            var borrowing = await _context.Borrowing.FirstOrDefaultAsync(m => m.ID == id);
+            var borrowing = await _context.Borrowing.Include(i => i.Member).Include(c => c.Book).ThenInclude(bc => bc.Author).FirstOrDefaultAsync(m => m.ID == id);
+           
             if (borrowing == null)
             {
                 return NotFound();
@@ -38,6 +39,23 @@ namespace Moldovan_Maria_Karina_Lab2.Pages.Borrowings
                 Borrowing = borrowing;
             }
             return Page();
+        }
+        public async Task<IActionResult> OnPostAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var borrowing = await _context.Borrowing.FindAsync(id);
+            if (borrowing != null)
+            {
+                Borrowing = borrowing;
+                _context.Borrowing.Remove(Borrowing);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage("./Index");
         }
     }
 }
