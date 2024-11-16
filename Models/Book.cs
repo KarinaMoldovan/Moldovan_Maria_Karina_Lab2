@@ -8,12 +8,14 @@ namespace Moldovan_Maria_Karina_Lab2.Models
     public class Book
     {
         public int ID { get; set; }
+        [Required(ErrorMessage = "Introducerea unui titlu este obligatorie.")]
+        [StringLength(150, MinimumLength = 3, ErrorMessage = "Titlul trebuie sa conțină între 3 si 150 de caractere.")]
         [Display(Name = "Book Title")]
         public string Title { get; set; }
         public int? AuthorID { get; set; }
         public Author? Author { get; set; }
 
-        [Column(TypeName = "decimal(6,2)")]
+        [Column(TypeName = "decimal(6, 2)")][Range(0.01, 500)]
 
         public decimal Price { get; set; }
 
