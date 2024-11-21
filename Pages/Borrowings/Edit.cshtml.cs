@@ -36,8 +36,8 @@ namespace Moldovan_Maria_Karina_Lab2.Pages.Borrowings
                 return NotFound();
             }
             Borrowing = borrowing;
-           ViewData["BookID"] = new SelectList(_context.Book, "Title", "Title");
-           ViewData["MemberID"] = new SelectList(_context.Member, "FullName", "FullName");
+           ViewData["BookID"] = new SelectList(_context.Book, "ID", "Title");
+           ViewData["MemberID"] = new SelectList(_context.Member, "ID", "FullName");
             return Page();
         }
 
